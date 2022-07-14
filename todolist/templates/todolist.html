@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+
+{% block title %} 
+To Do List
+{% endblock %} 
+
+{% block content %} 
+<body class="container">
+<h2>To Do List</h2>
+<br>
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <th>To do</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in todos %}
+        <tr>
+            {% if item.done == 1 %}
+            <td><strike>{{ item.todo }}</strike></td>
+            {% else %} 
+            <td>{{ item.todo }}</td>
+            {% endif %}
+            <td>
+                <form method="POST">
+
+                    <button type="submit" class="btn btn-outline-success" name="done_button" value="{{ item.todo }}">Done</button>
+
+                    <button type="submit" class="btn btn-outline-danger" name="delete_button" value="{{ item.todo }}">Delete</button>
+
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+<form method="POST">
+    {{ AddForm.hidden_tag() }}
+    <h3>Add new To Do</h3>
+    <br>
+    <div class="form-group row">
+        {{ AddForm.todo.label(class="col-sm-2 col-form-label") }}
+        <div class="col-sm-10">
+            {{ AddForm.todo(class="form-control") }}
+        </div>
+        {{ AddForm.submit(class="btn btn-primary mb-2") }}
+    </div>   
+</form>
+</body>
+
+
+{% endblock %}
